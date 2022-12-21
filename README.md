@@ -2,7 +2,7 @@
 
 ## User Stories
 
-STANDARD CRITERIA
+**STANDARD CRITERIA**
 
 ```
 As a user 
@@ -54,7 +54,7 @@ So that I can see only my recipes
 I want to be able to log in
 ```
 
-EXTENDED CRITERIA
+**EXTENDED CRITERIA**
 
 ```
 As a user
@@ -76,3 +76,25 @@ I want to be able to upload the photo and have the recipe saved
 - Google Vision / Tesseract
 - Microsoft Azure
 ```
+
+## UX/UI Design
+Completed on Figma: [view here](https://www.figma.com/file/WSduqphwN1tl58hm4iOdjV/Recipe-App?node-id=0%3A1&t=HQkNCDCGTKooCgW1-0)
+
+## Component Hierarchy
+
+```
+PublicHome.js
+|
+|-- Header.jsx
+|-- Footer.jsx
+|-- Sign Up.jsx
+|-- Log In.jsx
+```
+
+## Testing
+Header.jsx
+1. Test that there are two buttons
+2. Test that it contains "The Recipe Collective"
+
+Footer.jsx
+As we do not expect the footer to change, take snapshot
