@@ -43,7 +43,7 @@ function RecipeDetails({ allRecipes }) {
                                     <p className="text-center text-mandarin md:text-lg">Serves: {recipe.serveSize}</p>
                                     <p className="text-center text-mandarin md:text-lg italic">Total time: {recipe.cookingTime}</p>
                                     <p className="text-center text-mandarin md:text-lg italic">Source:
-                                        <a className="underline ml-1" href={recipe.source}>{extractDomain(recipe.source)}</a>
+                                        <a className="underline ml-1" href={recipe.source}>{extractDomain(recipe.source)}/...</a>
                                     </p>
                                     <div className="flex flex-row gap-2 sm:gap-4 py-2 sm:py-4">
                                         <button className="bg-black text-white md:text-xl py-1 px-3 sm:py-1.5 sm:px-5 rounded-lg">Edit</button>

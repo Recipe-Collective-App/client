@@ -1,7 +1,8 @@
 import "tailwindcss/tailwind.css";
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getAllRecipes } from "./components/AsyncCall";
+import AddRecipe from "./pages/AddRecipe";
 import PageNotFound from "./pages/PageNotFound";
 import PublicHome from "./pages/PublicHome";
 import UserHome from "./pages/UserHome";
@@ -11,18 +12,12 @@ function App() {
   const [allRecipes, setAllRecipes] = useState([]);
   const [error, setError] = useState("");
 
-  const getAllRecipes = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/getRecipe/3");
-      setAllRecipes(response.data);
-    } catch (error) {
-      setError(error.message)
-      console.log(error.message)
-    }
+  const getRecipesHandler = () => {
+    getAllRecipes(setAllRecipes, setError)
   }
 
   useEffect(() => {
-    getAllRecipes()
+    getRecipesHandler();
   }, [])
 
   if (error) {
@@ -37,6 +32,7 @@ function App() {
             <Route path='/' element={<PublicHome />} />
             <Route path='/home' element={<UserHome allRecipes={allRecipes} />} />
             <Route path='/recipe/:id' element={<RecipeDetails allRecipes={allRecipes} />} />
+            <Route path='/add-recipe' element={<AddRecipe getRecipesHandler={getRecipesHandler} />} />
           </Routes>
         </Router>
       ) : (
