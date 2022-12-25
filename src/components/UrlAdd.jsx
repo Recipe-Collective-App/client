@@ -15,7 +15,7 @@ const UrlAdd = ({ getRecipesHandler }) => {
             const response = await axios.post(process.env.REACT_APP_ADD, { url: url });
             setErrorMessage(response.data.message);
             if (response.data.message === "Recipe added!") {
-                getRecipesHandler()
+                getRecipesHandler();
                 navigate("/home")
             }
         } else {
