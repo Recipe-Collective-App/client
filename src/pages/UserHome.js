@@ -28,7 +28,6 @@ function UserHome({ allRecipes, searchRecipesHandler, searchRecipes }) {
           spellCheck="false"
           value={category}
           onChange={(e) => {
-            e.preventDefault();
             setCategory(e.target.value);
           }}
         />
