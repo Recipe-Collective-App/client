@@ -8,24 +8,3 @@ export const getAllRecipes = async (setAllRecipes, setError, userid) => {
     setError(error.message);
   }
 };
-export const getSearchRecipes = async (
-  setSearchRecipes,
-  setError,
-  userid,
-  category
-) => {
-  try {
-    if (category) {
-      const response = await axios.get(
-        `${process.env.REACT_APP_SEARCH}/${userid}/${category}`
-      );
-      if (response.status === 200) {
-        setSearchRecipes(response.data);
-      } else {
-        setError(response.data.message);
-      }
-    }
-  } catch (error) {
-    setError(error.message);
-  }
-};

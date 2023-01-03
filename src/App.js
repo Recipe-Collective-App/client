@@ -13,20 +13,14 @@ import RecipeDetails from "./pages/RecipeDetails";
 
 function App() {
   const [allRecipes, setAllRecipes] = useState([]);
-  const [searchRecipes, setSearchRecipes] = useState([]);
   const [error, setError] = useState("");
   const [userid, setUserid] = useState(3);
 
   const getRecipesHandler = () => {
     getAllRecipes(setAllRecipes, setError, userid);
   };
-  const searchRecipesHandler = (category) => {
-    getSearchRecipes(setSearchRecipes, setError, userid, category);
-  };
+
   useEffect(() => {
-    if (searchRecipes.length > 0 && !error) {
-      searchRecipesHandler();
-    }
     if (!error) {
       getRecipesHandler();
     }
@@ -42,9 +36,7 @@ function App() {
             element={
               <UserHome
                 allRecipes={allRecipes}
-                searchRecipes={searchRecipes}
                 userid={userid}
-                searchRecipesHandler={searchRecipesHandler}
               />
             }
           />
