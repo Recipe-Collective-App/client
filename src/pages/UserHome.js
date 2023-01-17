@@ -28,14 +28,16 @@ function UserHome({ allRecipes }) {
         </h1>
       </div>
       <div className="h-full grid grid-cols-2 md:grid-cols-3 justify-center md:justify-center px-6 pb-10">
-        {allRecipes.filter((recipe) => {
-          if (searchQuery === "") {
-            return recipe
-          }
-          if (recipe.category.includes(searchQuery.toLowerCase())) {
-            return recipe
-          }
-        })
+        {allRecipes
+          .filter((recipe) => {
+            if (searchQuery === "") {
+              return recipe;
+            }
+
+            if (recipe.category.includes(searchQuery.toLowerCase())) {
+              return recipe;
+            }
+          })
           .map((recipe, i) => (
             <Recipes
               key={i}

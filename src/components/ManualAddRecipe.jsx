@@ -1,6 +1,9 @@
 import { useState} from "react";
 import axios from "axios";
-const ManualAddRecipe = () => {   
+import {FiPlusSquare,FiX} from "react-icons/fi"
+const ManualAddRecipe = (getImageUrl, photoURL) => { 
+    
+    //console.log("PhotoURL" + photoURL);
     //userid is hardcoded need to change 
     const userid = 3;
     const [file, setFile] = useState();
@@ -12,8 +15,23 @@ const ManualAddRecipe = () => {
     const [ingredients, setIngredients] = useState([]);
     const [instructions, setInstructions] = useState("");
     const [category, setCategory] = useState([]);
-    const [photoURL, setPhotoURL] = useState("");
     const [errosStatus, setErrorStatus] = useState("");
+
+    const addMultipleCategory = () => {
+        const addedCategory = [...category,[]];
+        setCategory(addedCategory);
+    }
+    const handleCategoryChange = (e, i) => {
+        const data = [...category];
+        data[i] = e.target.value;
+        setCategory(data);
+        
+    }
+    const deleteCategory = (i) => {
+        const delVal = [...category];
+        delVal.splice(i, 1);
+        setCategory(delVal);
+    }
 
     const saveFile = (e) => {
         setFile(e.target.files[0]);
@@ -24,21 +42,8 @@ const ManualAddRecipe = () => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("fileName", fileName);
-        try {
-          const responseIMG = await axios.post(
-            process.env.REACT_APP_UPLOAD_IMAGE,
-            formData
-            );
-            if (responseIMG.data === "You must select a file.") {
-                setErrorStatus(responseIMG.data);
-            } else {
-                setPhotoURL(responseIMG.data);
-            }
-        } catch (error) {
-          console.log(error.message);
-        }
-        //photoURL = setPhotoURL;
-        console.log("Photos Link"+photoURL);
+        getImageUrl(formData);
+        console.log("Entering into Add receipe")
          let recipeData = {
              userid,
              recipeName,
@@ -57,6 +62,7 @@ const ManualAddRecipe = () => {
         setIngredients([]);
         setInstructions("");
         setCategory([]);
+        console.log("Photos Link"+photoURL);
         console.log(recipeData);
         try {
             if (userid && recipeName && cookingTime && serveSize && source && ingredients && instructions && category && photoURL) {
@@ -100,17 +106,20 @@ const ManualAddRecipe = () => {
                         
                     <label htmlFor="ingridients" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Ingridients:</label>
                     <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Enter an Ingridients" required onChange={(e) => {setIngredients(e.target.value)}} value = { ingredients }/>
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Enter an Ingridients one line per item" required onChange={(e) => {setIngredients(e.target.value)}} value = { ingredients }/>
                         
                     <label htmlFor="instructions" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Instructions:</label>
                     <textarea row="5" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Enter Recipe Instructions" required onChange={(e) => {setInstructions(e.target.value)}} value = { instructions }/>
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Enter Recipe Instructions" required onChange={(e) => { setInstructions(e.target.value) }} value={instructions} />
                         
                     <label htmlFor="category" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Category:</label>
+                    <FiPlusSquare onClick={()=>addMultipleCategory() } />
+                    {category.map((data,i)=>{ return(<div key={i}>
                     <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="was thinking of dropdown" required onChange={(e) => {setCategory(e.target.value)}} value = { category }/>
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="" required onChange={(e) => handleCategoryChange(e, i)} value={data} /><FiX onClick={() => deleteCategory(i)}></FiX> </div>)
+                    })}  
                         
-                    <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700">Photo</label>
+                    <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700">Photo:</label>
                     <input className="form-control w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding
                      border border-solid border-gray-300 rounded transition ease-in-out m-0
                      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
