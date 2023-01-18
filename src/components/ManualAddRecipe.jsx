@@ -1,8 +1,8 @@
-import { useState} from "react";
+import { useState,useNavigate} from "react";
 import axios from "axios";
 import {FiPlusSquare,FiX} from "react-icons/fi"
 const ManualAddRecipe = (getImageUrl, photoURL) => { 
-    
+    //const navigate = useNavigate();
     //console.log("PhotoURL" + photoURL);
     //userid is hardcoded need to change 
     const userid = 3;
@@ -32,7 +32,7 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         delVal.splice(i, 1);
         setCategory(delVal);
     };
-     const addMultipleIngredients = () => {
+    const addMultipleIngredients = () => {
         const addedIngredients = [...ingredients, [{ingredientName:""}]];
         setIngredients(addedIngredients);
     }
@@ -74,9 +74,15 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         setServeSize(0);
         setCookingTime("")
         setSource("");
-        setIngredients([{}]);
-        setInstructions("");
-        setCategory([{}]);
+        Array.from(document.querySelectorAll('input')).forEach(
+            input => (input.value = "")
+         );    
+        setIngredients([{ingredientName:""}])
+        setInstructions("")
+        Array.from(document.querySelectorAll('input')).forEach(
+            input => (input.value = "")
+         );    
+        setCategory([{categoryName:""}]);
         console.log("Photos Link"+photoURL);
         console.log(recipeData);
         try {
@@ -106,38 +112,38 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
                     focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Enter Recipe Name" required onChange={(e) => {
                     setRecipeName(e.target.value)}} value = { recipeName }/>  
                         
-                    <label htmlFor="serveSize" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Serving Size:</label>
+                    <label htmlFor="serveSize" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold mt-3">Serving Size:</label>
                     <input type="number" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
                     focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Enter Serve Size" required onChange={(e) => {setServeSize(e.target.value) 
                             }} value = { serveSize }/>
                         
-                    <label htmlFor="estimatedTime" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Estimated Time:</label>
+                    <label htmlFor="estimatedTime" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold mt-3">Estimated Time:</label>
                     <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
                     focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Estimated Time Of cooking" required onChange={(e) => {setCookingTime(e.target.value)}}  value = { cookingTime }/>
                         
-                    <label htmlFor="source" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Source:</label>
+                    <label htmlFor="source" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold mt-3">Source:</label>
                     <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
                     focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="" required onChange={(e) => {setSource(e.target.value)}} value = { source }/>
-                        
-                    <label htmlFor="ingridients" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Ingridients:</label>
-                    <FiPlusSquare onClick={() => addMultipleIngredients()} />
-                    {ingredients.map((data,i)=>{ return(<div key={i}>
+                     <div className="w-full flex flex-row items-center justify-between mt-3 mb-2">   
+                    <label htmlFor="ingredients" className="form-label inline-block  text-gray-700 text-md font-semibold ">Ingredients:</label>
+                    <FiPlusSquare onClick={() => addMultipleIngredients()} /></div>
+                    {ingredients.map((data,i)=>{ return(<div key={i} className="w-full flex flex-row items-center justify-between gap-2">
                     <input type="text" name = "ingredientName"className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Add Multiple Ingridients with + Sign" required onChange={(e) => handleIngredientsChange(e, i)} /><FiX onClick={() => deleteIngredients(i)}></FiX> </div>)
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none my-2" placeholder="Please Add Multiple Ingredients with + Sign" required onChange={(e) => handleIngredientsChange(e, i)} /><FiX onClick={() => deleteIngredients(i)}></FiX> </div>)
                     })}  
                         
-                    <label htmlFor="instructions" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Instructions:</label>
+                    <label htmlFor="instructions" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold mt-3">Instructions:</label>
                     <textarea row="5" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
                     focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Enter Recipe Instructions" required onChange={(e) => { setInstructions(e.target.value) }} value={instructions} />
-                        
+                     <div className="w-full flex flex-row items-center justify-between mt-3 mb-2">      
                     <label htmlFor="category" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Category:</label>
-                    <FiPlusSquare onClick={()=>addMultipleCategory() } />
-                    {category.map((data,i)=>{ return(<div key={i}>
+                    <FiPlusSquare onClick={()=>addMultipleCategory() } /></div> 
+                    {category.map((data,i)=>{ return(<div key={i} className="w-full flex flex-row items-center justify-between gap-2">
                     <input type="text" name ="categoryName" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Add Multiple Catogory with + Sign" required onChange={(e) => handleCategoryChange(e, i)} /><FiX onClick={() => deleteCategory(i)}></FiX> </div>)
-                    })}  
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none my-2" placeholder="Please Add Multiple Catogory with + Sign" required onChange={(e) => handleCategoryChange(e, i)} /><FiX onClick={() => deleteCategory(i)}></FiX> </div>)
+                    })} 
                         
-                    <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700">Photo:</label>
+                    <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700 mt-3">Photo:</label>
                     <input className="form-control w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding
                      border border-solid border-gray-300 rounded transition ease-in-out m-0
                      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"

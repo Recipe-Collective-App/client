@@ -40,7 +40,7 @@ const UrlAdd = ({ getRecipesHandler }) => {
                         }}
                     />
                     <button
-                        className="bg-mandarin text-white sm:text-lg rounded-lg py-1.5 px-3"
+                        className="bg-mandarin text-white sm:text-lg rounded-lg py-1.5 px-3 font-semibold"
                         type="button"
                         onClick={handleGetRecipe}
                     >Get Recipe</button>
