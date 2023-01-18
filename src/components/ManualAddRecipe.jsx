@@ -12,13 +12,13 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
     const [serveSize, setServeSize] = useState(0);
     const [cookingTime, setCookingTime] = useState("");
     const [source, setSource] = useState("");
-    const [ingredients, setIngredients] = useState([]);
+    const [ingredients, setIngredients] = useState([{ingredientName:""}]);
     const [instructions, setInstructions] = useState("");
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState([{categoryName:""}]);
     const [errosStatus, setErrorStatus] = useState("");
 
     const addMultipleCategory = () => {
-        const addedCategory = [...category,[]];
+        const addedCategory = [...category, [{categoryName:""}]];
         setCategory(addedCategory);
     }
     const handleCategoryChange = (e, i) => {
@@ -31,7 +31,22 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         const delVal = [...category];
         delVal.splice(i, 1);
         setCategory(delVal);
+    };
+     const addMultipleIngredients = () => {
+        const addedIngredients = [...ingredients, [{ingredientName:""}]];
+        setIngredients(addedIngredients);
     }
+    const handleIngredientsChange = (e, i) => {
+        const data = [...ingredients];
+        data[i] = e.target.value;
+        setIngredients(data);
+        
+    }
+    const deleteIngredients = (i) => {
+        const delVal = [...ingredients];
+        delVal.splice(i, 1);
+        setIngredients(delVal);
+    };
 
     const saveFile = (e) => {
         setFile(e.target.files[0]);
@@ -42,7 +57,7 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("fileName", fileName);
-        getImageUrl(formData);
+        //getImageUrl(formData);
         console.log("Entering into Add receipe")
          let recipeData = {
              userid,
@@ -59,9 +74,9 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         setServeSize(0);
         setCookingTime("")
         setSource("");
-        setIngredients([]);
+        setIngredients([{}]);
         setInstructions("");
-        setCategory([]);
+        setCategory([{}]);
         console.log("Photos Link"+photoURL);
         console.log(recipeData);
         try {
@@ -84,7 +99,7 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
             <h1 className="text-1xl sm:text-2xl lg:text-3xl font-semibold pb-0.5 md:pb-2">Add Your Own Recipe</h1>
             </div>
             <form onSubmit={addRecipeData}>
-            <div className="p-6 rounded-lg shadow-lg bg-white max-w-md">
+            <div className="p-6 rounded-lg shadow-lg bg-white max-w-lg">
                 <div className="form-group mb-6">
                     <label htmlFor="recipeName" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Recipe Name:</label>
                     <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
@@ -105,8 +120,11 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
                     focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="" required onChange={(e) => {setSource(e.target.value)}} value = { source }/>
                         
                     <label htmlFor="ingridients" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Ingridients:</label>
-                    <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Enter an Ingridients one line per item" required onChange={(e) => {setIngredients(e.target.value)}} value = { ingredients }/>
+                    <FiPlusSquare onClick={() => addMultipleIngredients()} />
+                    {ingredients.map((data,i)=>{ return(<div key={i}>
+                    <input type="text" name = "ingredientName"className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Add Multiple Ingridients with + Sign" required onChange={(e) => handleIngredientsChange(e, i)} /><FiX onClick={() => deleteIngredients(i)}></FiX> </div>)
+                    })}  
                         
                     <label htmlFor="instructions" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Instructions:</label>
                     <textarea row="5" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
@@ -115,8 +133,8 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
                     <label htmlFor="category" className="form-label inline-block mb-2 text-gray-700 text-md font-semibold">Category:</label>
                     <FiPlusSquare onClick={()=>addMultipleCategory() } />
                     {category.map((data,i)=>{ return(<div key={i}>
-                    <input type="text" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="" required onChange={(e) => handleCategoryChange(e, i)} value={data} /><FiX onClick={() => deleteCategory(i)}></FiX> </div>)
+                    <input type="text" name ="categoryName" className="form-control w-full px-3 py-1.5 text-base font-normal   text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded
+                    focus:text-gray-700 focus:bg-white focus:border-black-600 focus:outline-none" placeholder="Please Add Multiple Catogory with + Sign" required onChange={(e) => handleCategoryChange(e, i)} /><FiX onClick={() => deleteCategory(i)}></FiX> </div>)
                     })}  
                         
                     <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700">Photo:</label>
