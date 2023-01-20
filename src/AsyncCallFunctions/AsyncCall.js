@@ -26,6 +26,7 @@ export const getImageData = async (formData, setError, setPhotoURL) => {
     console.log(error.message);
   }
 };
+
 export const saveRecipeData = async (getRecipes, setError) => {
   console.log("Inside Recipe Call");
   console.log(getRecipes);
