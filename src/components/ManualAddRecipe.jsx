@@ -1,9 +1,9 @@
-import { useState,useNavigate} from "react";
-import axios from "axios";
-import {FiPlusSquare,FiX} from "react-icons/fi"
-const ManualAddRecipe = (getImageUrl, photoURL) => { 
-    //const navigate = useNavigate();
-    //console.log("PhotoURL" + photoURL);
+import { useState} from "react";
+import { FiPlusSquare, FiX } from "react-icons/fi"
+import { useNavigate } from "react-router-dom";
+const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => { 
+    const navigate = useNavigate();
+    console.log("PhotoURL in Manual Recipe" + photoURL);
     //userid is hardcoded need to change 
     const userid = 3;
     const [file, setFile] = useState();
@@ -52,12 +52,13 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
     };
-    const addRecipeData = async (e) => {
+    const addRecipeData = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("file", file);
         formData.append("fileName", fileName);
-        //getImageUrl(formData);
+        console.log(formData);
+        getImageUrl(formData);
         console.log("Entering into Add receipe")
          let recipeData = {
              userid,
@@ -85,18 +86,8 @@ const ManualAddRecipe = (getImageUrl, photoURL) => {
         setCategory([{categoryName:""}]);
         console.log("Photos Link"+photoURL);
         console.log(recipeData);
-        try {
-            if (userid && recipeName && cookingTime && serveSize && source && ingredients && instructions && category && photoURL) {
-                console.log("Hiiiii")
-              const responseAddURL = await axios.post(process.env.REACT_APP_MANUAL_ADD, recipeData);
-            console.log(responseAddURL.data);  
-            } else {
-                console.log("Data is not Added")
-            }
-            
-        } catch (error) {
-            console.log(error.message);
-        }
+        saveRecipeHandler(recipeData);
+        navigate("/home")
       };
     return (
         <>

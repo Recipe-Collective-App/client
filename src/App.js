@@ -1,7 +1,11 @@
 import "tailwindcss/tailwind.css";
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getAllRecipes, getImageData } from "./AsyncCallFunctions/AsyncCall.js";
+import {
+  getAllRecipes,
+  getImageData,
+  saveRecipeData,
+} from "./AsyncCallFunctions/AsyncCall.js";
 import AddRecipe from "./pages/AddRecipe";
 import PageNotFound from "./pages/PageNotFound";
 import PublicHome from "./pages/PublicHome";
@@ -17,8 +21,11 @@ function App() {
   const getRecipesHandler = () => {
     getAllRecipes(setAllRecipes, setError, userid);
   };
-  const getImageUrl = (getFormData) => {
-    getImageData(getFormData, setError, setPhotoURL);
+  const getImageUrl = (formData) => {
+    getImageData(formData, setError, setPhotoURL);
+  };
+  const saveRecipeHandler = (getRecipes) => {
+    saveRecipeData(getRecipes, setError);
   };
 
   useEffect(() => {
@@ -47,6 +54,7 @@ function App() {
                 getRecipesHandler={getRecipesHandler}
                 photoURL={photoURL}
                 getImageUrl={getImageUrl}
+                saveRecipeHandler={saveRecipeHandler}
               />
             }
           />
