@@ -50,17 +50,20 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
     };
 
     const saveFile = (e) => {
+        e.preventDefault();
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
     };
-
-    const addRecipeData = (e) => {
+    const addImageData = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("file", file);
         formData.append("fileName", fileName);
-        console.log(formData);
         getImageUrl(formData);
+    }
+
+    const addRecipeData = (e) => {
+        e.preventDefault();
         console.log("Entering into Add receipe")
         let recipeData = {
             userid,
@@ -95,7 +98,7 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
                 {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold pb-0.5 md:pb-2 text-center">OR</h1> */}
                 <h1 className="text-1xl sm:text-2xl lg:text-3xl font-semibold pb-0.5 md:pb-2">Add Your Own Recipe</h1>
             </div>
-            <form onSubmit={addRecipeData}>
+            <form>
                 <div className="p-6 rounded-lg shadow-lg bg-white max-w-lg">
                     <div className="form-group mb-6">
                         <label htmlFor="recipeName"
@@ -217,7 +220,7 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
                                     <FiX onClick={() => deleteCategory(i)}></FiX>
                                 </div>)
                         })}
-
+                        <div className="w-full flex flex-row items-center justify-between mt-3 mb-2">
                         <label
                             htmlFor="formFile"
                             className="form-label inline-block mb-2 text-gray-700 mt-3"
@@ -230,11 +233,18 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
                             name="file"
                             onChange={saveFile}
                         />
+                         <button
+                            className="bg-mandarin text-white sm:text-lg rounded-lg py-1.5 px-3 ml-2"
+                            type="submit" onClick={addImageData}
+                        >
+                            Add
+                            </button>
+                            </div>
                     </div>
                     <div className="flex flex-row items-center justify-center">
                         <button
                             className="bg-mandarin text-white sm:text-lg rounded-lg py-1.5 px-3"
-                            type="submit"
+                            type="submit" onClick={addRecipeData}
                         >
                             Add Recipe
                         </button>
