@@ -8,17 +8,20 @@ const AddRecipe = ({
   getImageUrl,
   photoURL,
   saveRecipeHandler,
+  setUrlAdd,
 }) => {
-  console.log("PhotoURL add Recipe" + photoURL);
+
   return (
     <>
       <Header />
-      <UrlAdd getRecipesHandler={getRecipesHandler} />
+      <UrlAdd getRecipesHandler={getRecipesHandler} setUrlAdd={setUrlAdd} />
       <div className="flex flex-col items-center justify-center text-lg font-semibold pb-4">
         <ManualAddRecipe
+          getRecipesHandler={getRecipesHandler}
           getImageUrl={getImageUrl}
           photoURL={photoURL}
           saveRecipeHandler={saveRecipeHandler}
+          setUrlAdd={setUrlAdd}
         />
       </div>
       <Footer />

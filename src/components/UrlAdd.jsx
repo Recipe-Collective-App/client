@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 
-const UrlAdd = ({ getRecipesHandler }) => {
+const UrlAdd = ({ getRecipesHandler, setUrlAdd }) => {
     const navigate = useNavigate();
     const [url, setUrl] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
@@ -16,7 +16,8 @@ const UrlAdd = ({ getRecipesHandler }) => {
             setErrorMessage(response.data.message);
             if (response.data.message === "Recipe added!") {
                 getRecipesHandler();
-                navigate("/home")
+                setUrlAdd(true);
+                navigate("/");
             }
         } else {
             setErrorMessage("Please enter a valid URL")

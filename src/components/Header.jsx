@@ -4,14 +4,13 @@ const Header = () => {
 
     return (
         <>
-            <div className="flex flex-row items-center justify-between px-6 sm:px-14 xl:px-20 pt-6 pb-4 lg:pt-8 lg:pb-6 font-semibold lg:text-xl">
-                <Link to="/home">
-                    <h1>The Recipe Collective</h1>
+            <div className="flex flex-row items-center justify-between px-6 sm:px-14 xl:px-20 pt-6 pb-4 lg:pt-8 lg:pb-6 font-semibold">
+                <Link to="/">
+                    <h1 className="lg:text-2xl">The Recipe Collective</h1>
                 </Link>
-                <div className="flex flex-row gap-2.5 lg:gap-6">
-                    <button className="hover:text-mandarin">Sign Up</button>
-                    <button className="hover:text-mandarin">Log In</button>
-                </div>
+                <Link to="/add-recipe">
+                    <button className="bg-mandarin text-white px-2 py-1 rounded-lg lg:text-xl hover:opacity-80">Add Recipe</button>
+                </Link>
             </div>
         </>
     )

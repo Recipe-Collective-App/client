@@ -17,6 +17,7 @@ function App() {
   const [error, setError] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [userid, setUserid] = useState(3);
+  const [urlAdd, setUrlAdd] = useState(false);
 
   const getRecipesHandler = () => {
     getAllRecipes(setAllRecipes, setError, userid);
@@ -29,23 +30,21 @@ function App() {
   };
 
   useEffect(() => {
-    if (!error) {
-      getRecipesHandler();
-    }
-  }, [error]);
+    getRecipesHandler();
+  }, []);
 
   return (
     <>
       {!error ? (
         <Routes>
-          <Route path="/" element={<PublicHome />} />
-          <Route
+          <Route path="/" element={<UserHome allRecipes={allRecipes} userid={userid} />} />
+          {/* <Route
             path="/home"
             element={<UserHome allRecipes={allRecipes} userid={userid} />}
-          />
+          /> */}
           <Route
             path="/recipe/:id"
-            element={<RecipeDetails allRecipes={allRecipes} />}
+            element={<RecipeDetails allRecipes={allRecipes} urlAdd={urlAdd} />}
           />
           <Route
             path="/add-recipe"
@@ -55,6 +54,7 @@ function App() {
                 photoURL={photoURL}
                 getImageUrl={getImageUrl}
                 saveRecipeHandler={saveRecipeHandler}
+                setUrlAdd={setUrlAdd}
               />
             }
           />

@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
 
-function RecipeDetails({ allRecipes }) {
+function RecipeDetails({ allRecipes, urlAdd }) {
   const { id } = useParams();
 
   function extractDomain(url) {
@@ -59,9 +59,17 @@ function RecipeDetails({ allRecipes }) {
                     </p>
                     <p className="text-center text-mandarin md:text-lg italic">
                       Source:
-                      <a className="underline ml-1" href={recipe.source}>
-                        {extractDomain(recipe.source)}/...
-                      </a>
+                      {urlAdd ? (
+                        <>
+                          <a className="underline ml-1" href={recipe.source}>
+                            {extractDomain(recipe.source)}/...
+                          </a>
+                        </>
+                      ) : (
+                        <>
+                          {recipe.source}
+                        </>
+                      )}
                     </p>
                     <div className="flex flex-row gap-2 sm:gap-4 py-2 sm:py-4">
                       <button className="bg-black text-white md:text-xl py-1 px-3 sm:py-1.5 sm:px-5 rounded-lg">
@@ -96,9 +104,6 @@ function RecipeDetails({ allRecipes }) {
                         </div>
                       );
                     })}
-                    <button className="bg-mandarin text-white rounded-md py-1.5 mt-10">
-                      Email me my shopping list
-                    </button>
                   </div>
                   <div className="w-full sm:w-2/3 sm:ml-20">
                     <h2 className="text-lg md:text-xl font-semibold border-b py-1 my-4">

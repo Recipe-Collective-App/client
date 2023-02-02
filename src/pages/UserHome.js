@@ -10,16 +10,19 @@ function UserHome({ allRecipes }) {
   return (
     <>
       <Header />
-      <div className="flex justify-center gap-4 pt-10 pb-4">
-        <input
-          className="w-4/5 md:w-3/5 border border-mid-grey focus:border-mandarin rounded-lg p-2.5 sm:py-2 sm:px-2.5 md:py-2.5 md:px-3.5 sm:text-lg"
-          id="search"
-          type="text"
-          placeholder="Start typing to search by category"
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-          }}
-        />
+      <div className="flex flex-col items-center justify-center gap-4 pt-10 pb-4">
+        <div className="w-3/4 flex flex-col items-center">
+          <label htmlFor="search" className="uppercase text-sm font-semibold mb-2">Search for recipe</label>
+          <input
+            className="w-4/5 md:w-3/5 border border-mid-grey focus:border-mandarin rounded-lg p-2.5 sm:py-2 sm:px-2.5 md:py-2.5 md:px-3.5 sm:text-lg mb-2"
+            id="search"
+            type="text"
+            placeholder="Start typing to search by category"
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
+          />
+        </div>
       </div>
       <p className="text-red-500">{errorMessage}</p>
       <div className="px-6 sm:px-14 xl:px-20">

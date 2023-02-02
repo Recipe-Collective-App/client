@@ -2,9 +2,8 @@ import { useState } from "react";
 import { FiPlusSquare, FiX } from "react-icons/fi"
 import { useNavigate } from "react-router-dom";
 
-const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
+const ManualAddRecipe = ({ getRecipesHandler, saveRecipeHandler, getImageUrl, photoURL, setUrlAdd }) => {
     const navigate = useNavigate();
-    console.log("PhotoURL in Manual Recipe" + photoURL);
     //userid is hardcoded need to change 
     const userid = 3;
     const [file, setFile] = useState();
@@ -64,7 +63,6 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
 
     const addRecipeData = (e) => {
         e.preventDefault();
-        console.log("Entering into Add receipe")
         let recipeData = {
             userid,
             recipeName,
@@ -86,10 +84,10 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
         setIngredients([{ ingredientName: "" }])
         setInstructions("")
         setCategory([{ categoryName: "" }]);
-        console.log("Photos Link" + photoURL);
-        console.log(recipeData);
         saveRecipeHandler(recipeData);
-        navigate("/home")
+        getRecipesHandler();
+        setUrlAdd(false);
+        navigate("/")
     };
 
     return (
@@ -221,25 +219,25 @@ const ManualAddRecipe = ({ saveRecipeHandler, getImageUrl, photoURL }) => {
                                 </div>)
                         })}
                         <div className="w-full flex flex-row items-center justify-between mt-3 mb-2">
-                        <label
-                            htmlFor="formFile"
-                            className="form-label inline-block mb-2 text-gray-700 mt-3"
-                        >
-                            Photo:
-                        </label>
-                        <input
-                            className="form-control w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            type="file"
-                            name="file"
-                            onChange={saveFile}
-                        />
-                         <button
-                            className="bg-mandarin text-white sm:text-lg rounded-lg py-1.5 px-3 ml-2"
-                            type="submit" onClick={addImageData}
-                        >
-                            Add
+                            <label
+                                htmlFor="formFile"
+                                className="form-label inline-block mb-2 text-gray-700 mt-3"
+                            >
+                                Photo:
+                            </label>
+                            <input
+                                className="form-control w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                type="file"
+                                name="file"
+                                onChange={saveFile}
+                            />
+                            <button
+                                className="bg-mandarin text-white sm:text-lg rounded-lg py-1.5 px-3 ml-2"
+                                type="submit" onClick={addImageData}
+                            >
+                                Add
                             </button>
-                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-row items-center justify-center">
                         <button
